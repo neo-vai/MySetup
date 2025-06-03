@@ -1,0 +1,91 @@
+@define-color text #ffffff;
+@define-color subtext1 #e0e0e0;
+@define-color subtext0 #c0c0c0;
+@define-color overlay2 #a0a0a0;
+@define-color overlay1 #808080;
+@define-color overlay0 #606060;
+@define-color surface2 #404040;
+@define-color surface1 #303030;
+@define-color surface0 rgba(40, 40, 40, 0.25);  /* Полупрозрачный темный */
+@define-color base rgba(30, 30, 30, 0.25);      /* Полупрозрачный */
+@define-color mantle rgba(20, 20, 20, 0.25);    /* Полупрозрачный */
+@define-color crust rgba(10, 10, 10, 0.25);     /* Полупрозрачный */
+
+* {
+    border: none;
+    font-family: "Fira Code", "Font Awesome 6 Free";
+    font-size: 12px;
+    min-height: 0;
+}
+
+window#waybar {
+    background: transparent;
+    color: @text;
+}
+
+/* Все модули - прозрачный фон с серым текстом */
+#workspaces button, 
+#clock, 
+#battery, 
+#cpu, 
+#memory, 
+#network, 
+#pulseaudio, 
+#tray, 
+#mode, 
+#idle_inhibitor,
+#custom-media {
+    padding: 0 10px;
+    margin: 3px;
+    border-radius: 4px;
+    background: @surface0;  /* Полупрозрачный темный фон */
+    color: @text;          /* Белый текст */
+}
+
+/* Рабочие пространства */
+#workspaces button {
+    padding: 0 5px;
+    background: @surface0;
+    color: @overlay2;
+}
+
+#workspaces button.active {
+    background: @surface1;
+    color: @text;
+}
+
+#workspaces button.urgent {
+    color: @overlay1;
+}
+
+/* Особые состояния батареи */
+#battery.charging {
+    color: @text;
+}
+
+#battery.critical:not(.charging) {
+    color: @overlay1;
+    animation: blink 1s linear infinite;
+}
+
+@keyframes blink {
+    to { opacity: 0.5; }
+}
+
+/* Модуль звука - такой же как другие справа */
+#pulseaudio {
+    color: @text;  /* Белый цвет иконки и текста */
+}
+
+#pulseaudio.muted {
+    color: @overlay1;  /* Серый при выключенном звуке */
+}
+
+/* Дополнительные модули */
+#tray {
+    background: @surface0;
+}
+
+#clock {
+    font-weight: bold;
+}
