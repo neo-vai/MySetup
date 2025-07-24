@@ -1,0 +1,12 @@
+@define-color text #ffffff;
+@define-color subtext1 #e0e0e0;
+@define-color subtext0 #c0c0c0;
+@define-color overlay2 #a0a0a0;
+@define-color overlay1 #808080;
+@define-color overlay0 #ccc000;
+@define-color surface2 #404040;
+@define-color surface1 #ffffff;
+@define-color surface0 rgba(40, 40, 40, 0.25);  /* Полупрозрачный темный */
+@define-color base rgba(30, 30, 30, 0.25);      /* Полупрозрачный */
+@define-color mantle rgba(20, 20, 20, 0.25);    /* Полупрозрачный */
+@define-color crust rgba(10, 10, 10, 0.25);     /* Полупрозрачный */

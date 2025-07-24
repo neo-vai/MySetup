@@ -1,28 +1,51 @@
 #!/bin/bash
 
 # Пути
-WALLPAPERS_DIR="$(dirname "$0")/../Wallpapers"
-CURRENT_WALLPAPER="$WALLPAPERS_DIR/.current_wallpaper.jpg"
+SCRIPT_DIR=$(dirname "$(realpath "$0")")
+WALLPAPERS_DIR="$SCRIPT_DIR/../Wallpapers"
+INDEX_FILE="$WALLPAPERS_DIR/.current_index"
+CURRENT_WALL="$WALLPAPERS_DIR/.current_wallpaper.jpg"  # Скрытый файл в директории скрипта
 
-# Проверяем существование папки с обоями
-if [ ! -d "$WALLPAPERS_DIR" ]; then
-    echo "Wallpapers directory not found: $WALLPAPERS_DIR" >&2
-    exit 1
+# Параметры анимации
+TRANSITION_TYPE="any"
+TRANSITION_DURATION=0.4
+TRANSITION_FPS=90
+
+# Проверка директории
+[ ! -d "$WALLPAPERS_DIR" ] && echo "Directory missing: $WALLPAPERS_DIR" >&2 && exit 1
+
+# Получение списка обоев
+mapfile -d '' wallpapers < <(find "$WALLPAPERS_DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" \) -print0 | sort -z)
+wallpapers_count=${#wallpapers[@]}
+[ $wallpapers_count -eq 0 ] && echo "No wallpapers found" >&2 && exit 1
+
+current_index=0
+if [ -f "$INDEX_FILE" ]; then
+    current_index=$(<"$INDEX_FILE")
+    [[ $current_index -ge $wallpapers_count ]] && current_index=0
+fi
+selected_wallpaper="${wallpapers[$current_index]}"
+echo $(( (current_index + 1) % wallpapers_count )) > "$INDEX_FILE"
+
+# Проверка демона
+if ! swww query >/dev/null 2>&1; then
+    swww-daemon --format xrgb >/tmp/swww.log 2>&1 &
+    sleep 0.3
 fi
 
-# Находим случайные обои (рекурсивно, включая подпапки)
-random_wallpaper=$(find "$WALLPAPERS_DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" \) | shuf -n1)
+# Позиция курсора
+cursor_pos=$(hyprctl cursorpos | awk '{print $4}')
+[ -z "$cursor_pos" ] && cursor_pos="center"
 
-# Проверяем наличие обоев
-if [ -z "$random_wallpaper" ]; then
-    echo "No wallpapers found in $WALLPAPERS_DIR" >&2
-    exit 1
-fi
+# Применение обоев
+swww img "$selected_wallpaper" \
+    --transition-type "$TRANSITION_TYPE" \
+    --transition-duration $TRANSITION_DURATION \
+    --transition-fps $TRANSITION_FPS \
+    --transition-pos "$cursor_pos"
 
-# Обновляем текущие обои (только если выбранный файл отличается)
-if [ "$random_wallpaper" != "$CURRENT_WALLPAPER" ]; then
-    cp -f "$random_wallpaper" "$CURRENT_WALLPAPER"
-fi
+# Сохранение копии для hyprlock
+cp "$selected_wallpaper" "$CURRENT_WALL"
 
-# Применяем обои на все мониторы через hyprpaper IPC
-hyprctl hyprpaper reload ",$CURRENT_WALLPAPER"
+# Уведомление
+# notify-send -i "$selected_wallpaper" "Обои изменены" "$(basename "$selected_wallpaper")"

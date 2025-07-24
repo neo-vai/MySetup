@@ -1,0 +1,356 @@
+@import "colors.css";
+
+@define-color flavour @flamingo;
+
+* {
+  border: none;
+  border-radius: 10px;
+  /* `otf-font-awesome` is required to be installed for icons */
+  /* font-family: 'NotoSans Nerd Font', FontAwesome, Roboto, Helvetica, Arial, sans-serif; */
+  font-family: "jetbrainsMono Nerd Font Propo";
+  font-size: 15px;
+  font-weight: bold;
+  min-height: 0;
+  transition: 0.1s;
+}
+
+window#waybar {
+  background-color: transparent;
+  color: @flavour;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+window#waybar.empty #window {
+  background-color: transparent;
+  border-color: transparent;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+tooltip {
+  background: @base;
+  color: @subtext0;
+  border-radius: 10px;
+  border-width: 1.5px;
+  border-style: solid;
+  border-color: @flavour;
+  transition: 0.1s;
+  opacity: 1;
+}
+
+#workspaces button {
+  padding: 5px;
+  color: @surface2;
+  margin-right: 5px;
+}
+
+#workspaces button.active {
+  color: @flavour;
+  background: @surface0;
+  border-radius: 20px;
+}
+
+#workspaces button.focused {
+  color: @subtext0;
+  background: @surface0;
+  border-radius: 20px;
+}
+
+#workspaces button.urgent {
+  color: @red;
+  background: @red;
+  border-radius: 20px;
+}
+
+#workspaces button:hover {
+  background: @surface0;
+  color: @text;
+  border-radius: 20px;
+}
+
+#workspaces button.empty {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+#custom-wallpaper,
+#custom-theme-switcher,
+#custom-power_profile,
+#custom-weather,
+#custom-vpn,
+#custom-notification,
+#window,
+#clock,
+#battery,
+#pulseaudio,
+#network,
+#keyboard-state,
+#cpu,
+#memory,
+#bluetooth,
+#temperature,
+#workspaces,
+#tray,
+#backlight {
+  background: @mantle;
+  opacity: 1;
+  padding: 0px 10px;
+  margin: 0;
+  margin-top: 5px;
+}
+
+#temperature {
+  border-radius: 20px 0px 0px 20px;
+}
+
+#temperature.critical {
+  color: @maroon;
+}
+
+#backlight {
+  color: @yellow;
+  /*
+  border-radius: 20px 0px 0px 20px;
+  border-left: 0px;
+  border-right: 0px;
+*/
+  border-left: 0px;
+  border-top: 2px solid @blue;
+  border-right: 2px solid @blue;
+  border-bottom: 2px solid @blue;
+  border-radius: 0px 20px 20px 0px;
+  margin-right: 5px;
+  padding-right: 10px;
+}
+#tray {
+  border-radius: 20px;
+  margin-right: 5px;
+  /*    padding: 0px 4px; */
+  padding-left: 15px;
+  padding-right: 15px;
+  border: 2px solid @text;
+}
+
+#tray.empty {
+  background-color: transparent;
+  border-color: transparent;
+  border: 0px;
+}
+
+#workspaces {
+  border-radius: 20px;
+  margin-left: 5px;
+  padding-right: 0px;
+  padding-left: 5px;
+  border: 2px solid @subtext0;
+}
+
+#custom-wallpaper  {
+  margin-right: 5px;
+  border-radius: 20px;
+  border: 2px solid @flavour;
+}
+
+#custom-power_profile {
+  color: @green;
+  border-left: 0px;
+  border-right: 0px;
+}
+
+#window {
+  margin-left: 5px;
+  border-radius: 20px 0 0 20px;
+  border-left: 2px solid @flavour;
+  border-right: 2px solid @flavour;
+  border-bottom: 2px solid @flavour;
+  border-top: 2px solid @flavour;
+}
+#keyboard-state {
+  margin-right: 5px;
+  border-radius: 0 20px 20px 0;
+  border-right: 2px solid @flavour;
+  border-bottom: 2px solid @flavour;
+  border-top: 2px solid @flavour;
+}
+
+window#waybar.empty #keyboard-state {
+  border-radius: 20px;
+  border: 2px solid @flavour;
+}
+
+#clock {
+  color: @flavour;
+  border-radius: 20px;
+  margin-left: 5px;
+  border-right: 0px;
+  transition: 0.1s;
+  padding-right: 13px;
+  padding-left: 13px;
+  border: 2px solid @flavour;
+}
+
+#network {
+  color: @flavour;
+  border-radius: 20px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-right: 5px;
+  border: 2px solid @flavour;
+}
+
+#cpu {
+  border-radius: 20px 0 0 20px;
+  border-left: 2px solid @flavour;
+  border-bottom: 2px solid @flavour;
+  border-top: 2px solid @flavour;
+}
+
+#memory {
+  border-bottom: 2px solid @theme;
+  border-top: 2px solid @theme;
+  border-right: 2px solid @theme; /* remove those three lines if you have a battery */
+  border-radius: 0 20px 20px 0;
+  margin-right: 5px;
+}
+
+#battery {
+  color: @green;
+  border-radius: 0 20px 20px 0;
+  border-right: 2px solid @flavour;
+  border-bottom: 2px solid @flavour;
+  border-top: 2px solid @flavour;
+  margin-right: 5px;
+  padding-right: 15px;
+  border-left: 0px;
+  border-top: 2px solid @theme;
+  border-right: 2px solid @theme;
+  border-bottom: 2px solid @theme;
+}
+
+#battery.good {
+  color: @theme;
+  border-left: 0px;
+  border-top: 2px solid @theme;
+  border-right: 2px solid @theme;
+  border-bottom: 2px solid @theme;
+}
+
+#battery.warning {
+  color: @red;
+  border-left: 0px;
+  border-top: 2px solid @theme;
+  border-right: 2px solid @theme;
+  border-bottom: 2px solid @theme;
+}
+
+#battery.charging {
+  color: @green;
+}
+
+#battery.critical {
+  color: @red;
+  border-left: 0px;
+  border-top: 2px solid @theme;
+  border-right: 2px solid @theme;
+  border-bottom: 2px solid @theme;
+}
+
+#network.disconnected {
+  color: @pink;
+}
+
+#bluetooth {
+  color: @flavour;
+  border-radius: 20px;
+  margin-right: 10px;
+}
+
+#pulseaudio {
+  color: @blue;
+  border: 2px solid @blue;
+  border-radius: 20px 0 0 20px;
+  margin-right: 0px;
+  padding-right: 10px;
+}
+
+#custom-notification {
+  color: @text;
+  border-right: 2px solid @blue;
+  border-top: 2px solid @blue;
+  border-bottom: 2px solid @blue;
+  border-radius: 0 20px 20px 0;
+  margin-right: 5px;
+  padding-right: 10px;
+}
+
+#pulseaudio.microphone {
+  color: @flavour;
+  border-radius: 20px 0px 0px 20px;
+  border-left: 2px solid @blue;
+  border-top: 2px solid @blue;
+  border-right: 0px;
+  border-bottom: 2px solid @blue;
+  padding-left: 15px;
+}
+
+#pulseaudio.muted {
+  color: @red;
+}
+
+#battery {
+  color: @green;
+  border-radius: 0 20px 20px 0;
+  margin-right: 5px;
+  padding-right: 15px;
+  border-left: 0px;
+  border-top: 2px solid @flavour;
+  border-right: 2px solid @flavour;
+  border-bottom: 2px solid @flavour;
+}
+
+#battery.good {
+  color: @flavour;
+  border-left: 0px;
+  border-top: 2px solid @flavour;
+  border-right: 2px solid @flavour;
+  border-bottom: 2px solid @flavour;
+}
+
+#battery.warning {
+  color: @red;
+  border-left: 0px;
+  border-top: 2px solid @flavour;
+  border-right: 2px solid @flavour;
+  border-bottom: 2px solid @flavour;
+}
+
+#battery.charging {
+  color: @green;
+}
+
+#battery.critical {
+  color: @red;
+  border-left: 0px;
+  border-top: 2px solid @flavour;
+  border-right: 2px solid @flavour;
+  border-bottom: 2px solid @flavour;
+}
+
+#custom-weather {
+  color: #8eacf3;
+  border-radius: 20px;
+  border-right: 0px;
+  margin-left: 0px;
+  margin-right: 5px;
+}
+
+#custom-vpn {
+  color: @pink;
+  border-radius: 20px;
+  border: 2px solid @pink;
+  margin-left: 0px;
+  margin-right: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
